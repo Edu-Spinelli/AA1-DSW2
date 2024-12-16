@@ -1,4 +1,3 @@
-```markdown
 # App Gerencial (HTML + TailwindCSS + JavaScript)
 
 Este repositório contém um **aplicativo gerencial** básico, desenvolvido puramente com **HTML**, **TailwindCSS** e **JavaScript** (sem uso de frameworks modernos como React/Vue). O foco principal é demonstrar **layout responsivo** em tons de **roxo**, com funcionalidade CRUD em diversas telas:
@@ -129,7 +128,3 @@ Este projeto é livre para estudo e uso particular. Sinta-se à vontade para ada
 
 ---
 
-Qualquer dúvida ou sugestão, fique à vontade para abrir **issues** ou dar **pull requests**. Aproveite para evoluir este projeto integrando com **APIs reais**, **armazenamento em banco de dados**, e **serviços de mensageria** como Twilio. 
-
-**Boas práticas e bom desenvolvimento!**
-```

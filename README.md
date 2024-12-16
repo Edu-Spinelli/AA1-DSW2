@@ -118,7 +118,11 @@ Basta abrir os arquivos `*.html` no seu navegador (Chrome, Firefox, Edge, etc.).
 
 ---
 
+# Integrantes do Projeto
 
+| Nome            | RA      |
+|-----------------|---------|
+| Eduardo Spinelli| 800220  |
 
 ---
 

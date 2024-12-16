@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vendas - App Gerencial</title>
+  
+  <link 
+    href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css"
+    rel="stylesheet"
+  >
+</head>
+<body class="bg-purple-900 text-white min-h-screen flex flex-col">
+
+  <nav class="bg-purple-800 p-4 shadow-md">
+    <div class="container mx-auto flex items-center justify-between">
+      <a href="dashboard.html" class="text-xl font-bold">Meu App Gerencial</a>
+      <ul class="flex gap-4">
+        <li><a href="dashboard.html" class="hover:text-purple-300 transition">Dashboard</a></li>
+        <li><a href="estoque.html" class="hover:text-purple-300 transition">Estoque</a></li>
+        <li><a href="clientes.html" class="hover:text-purple-300 transition">Clientes</a></li>
+        <li><a href="vendas.html" class="hover:text-purple-300 transition">Vendas</a></li>
+        <li><a href="login.html" class="hover:text purple-300 transition">Sair</a></li>
+
+      </ul>
+    </div>
+  </nav>
+
+  <main class="flex-grow container mx-auto p-4">
+    <h1 class="text-3xl font-semibold mt-4">Vendas</h1>
+
+    <section class="my-6">
+      <button
+        class="bg-purple-600 hover:bg-purple-500 rounded px-4 py-2 font-bold"
+        onclick="openNovaVendaModal()"
+      >
+        Nova Venda
+      </button>
+    </section>
+
+    <section class="bg-purple-800 rounded p-4">
+      <h2 class="text-xl font-bold mb-4">Histórico de Vendas</h2>
+      <table class="min-w-full text-left">
+        <thead class="border-b border-purple-700">
+          <tr>
+            <th class="py-2 px-2">Produto(s)</th>
+            <th class="py-2 px-2">Cliente</th>
+            <th class="py-2 px-2">Valor Total (R$)</th>
+            <th class="py-2 px-2">Entrada (R$)</th>
+            <th class="py-2 px-2">Parcelas</th>
+            <th class="py-2 px-2">Ações</th>
+          </tr>
+        </thead>
+        <tbody id="vendasTbody">
+          <tr class="border-b border-purple-700">
+            <td class="py-2 px-2">Perfume A</td>
+            <td class="py-2 px-2">João da Silva</td>
+            <td class="py-2 px-2">100.00</td>
+            <td class="py-2 px-2">50.00</td>
+            <td class="py-2 px-2">2x</td>
+            <td class="py-2 px-2">
+              <button class="bg-blue-600 hover:bg-blue-500 rounded px-3 py-1 text-sm" onclick="editarVenda()">
+                Editar
+              </button>
+              <button class="bg-red-600 hover:bg-red-500 rounded px-3 py-1 text-sm ml-2" onclick="excluirVenda()">
+                Excluir
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer class="bg-purple-800 p-4 text-center text-sm">
+    <p>© 2024 - Meu App Gerencial</p>
+  </footer>
+
+  <div
+    id="modalNovaVenda"
+    class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  >
+    <div class="bg-purple-800 w-full max-w-md p-6 rounded shadow-lg">
+      <h2 class="text-2xl font-bold mb-4">Nova Venda</h2>
+      <form onsubmit="return adicionarVenda(event)" class="flex flex-col gap-4">
+        
+        <div>
+          <label for="produtoVenda" class="block mb-1 text-sm font-medium">Produto</label>
+          <select
+            id="produtoVenda"
+            class="w-full p-2 rounded text-gray-900"
+            required
+          >
+            <option value="">Selecione um produto...</option>
+            <option value="Perfume A">Perfume A</option>
+            <option value="Perfume B">Perfume B</option>
+            <option value="Perfume C">Perfume C</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="clienteVenda" class="block mb-1 text-sm font-medium">Cliente</label>
+          <select
+            id="clienteVenda"
+            class="w-full p-2 rounded text-gray-900"
+            required
+          >
+            <option value="">Selecione um cliente...</option>
+            <option value="João da Silva">João da Silva</option>
+            <option value="Maria Oliveira">Maria Oliveira</option>
+            <option value="Novo Cliente">[Cadastrar novo cliente...]</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="valorProduto" class="block mb-1 text-sm font-medium">Valor do Produto (R$)</label>
+          <input 
+            type="number"
+            step="0.01"
+            id="valorProduto"
+            class="w-full p-2 rounded text-gray-900"
+            placeholder="Ex: 100.00"
+            required
+          />
+        </div>
+
+        <div>
+          <label for="valorEntrada" class="block mb-1 text-sm font-medium">Entrada (R$)</label>
+          <input 
+            type="number"
+            step="0.01"
+            id="valorEntrada"
+            class="w-full p-2 rounded text-gray-900"
+            placeholder="Ex: 50.00"
+            required
+          />
+        </div>
+
+        <div>
+          <label for="parcelas" class="block mb-1 text-sm font-medium">Parcelas</label>
+          <input 
+            type="number"
+            id="parcelas"
+            class="w-full p-2 rounded text-gray-900"
+            placeholder="Ex: 2"
+            min="1"
+            required
+          />
+        </div>
+
+        <div>
+          <label for="obsVenda" class="block mb-1 text-sm font-medium">Observações</label>
+          <textarea
+            id="obsVenda"
+            class="w-full p-2 rounded text-gray-900"
+            rows="2"
+            placeholder="Exemplo: data de pagamento, anotações..."
+          ></textarea>
+        </div>
+
+        <div class="flex justify-end gap-4 mt-4">
+          <button
+            type="button"
+            class="bg-gray-500 hover:bg-gray-400 rounded px-4 py-2"
+            onclick="closeNovaVendaModal()"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            class="bg-purple-600 hover:bg-purple-500 rounded px-4 py-2 font-bold"
+          >
+            Salvar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function openNovaVendaModal() {
+      document.getElementById('modalNovaVenda').classList.remove('hidden');
+    }
+
+    function closeNovaVendaModal() {
+      document.getElementById('modalNovaVenda').classList.add('hidden');
+    }
+
+    function adicionarVenda(event) {
+      event.preventDefault();
+
+      const produto = document.getElementById('produtoVenda').value;
+      const cliente = document.getElementById('clienteVenda').value;
+      const valorProduto = parseFloat(document.getElementById('valorProduto').value) || 0;
+      const valorEntrada = parseFloat(document.getElementById('valorEntrada').value) || 0;
+      const parcelas = parseInt(document.getElementById('parcelas').value) || 1;
+      const obs = document.getElementById('obsVenda').value.trim();
+
+
+      const tbody = document.getElementById('vendasTbody');
+      const tr = document.createElement('tr');
+      tr.classList.add('border-b', 'border-purple-700');
+
+      tr.innerHTML = `
+        <td class="py-2 px-2">${produto}</td>
+        <td class="py-2 px-2">${cliente}</td>
+        <td class="py-2 px-2">${valorProduto.toFixed(2)}</td>
+        <td class="py-2 px-2">${valorEntrada.toFixed(2)}</td>
+        <td class="py-2 px-2">${parcelas}x</td>
+        <td class="py-2 px-2">
+          <button class="bg-blue-600 hover:bg-blue-500 rounded px-3 py-1 text-sm" onclick="editarVenda()">
+            Editar
+          </button>
+          <button class="bg-red-600 hover:bg-red-500 rounded px-3 py-1 text-sm ml-2" onclick="excluirVenda()">
+            Excluir
+          </button>
+        </td>
+      `;
+
+      tbody.appendChild(tr);
+
+      document.getElementById('produtoVenda').value = '';
+      document.getElementById('clienteVenda').value = '';
+      document.getElementById('valorProduto').value = '';
+      document.getElementById('valorEntrada').value = '';
+      document.getElementById('parcelas').value = '1';
+      document.getElementById('obsVenda').value = '';
+
+      closeNovaVendaModal();
+
+
+    }
+
+   
+    function editarVenda() {
+      alert('Função de edição de venda em desenvolvimento...');
+    }
+
+    function excluirVenda() {
+      alert('Função de exclusão de venda em desenvolvimento...');
+    }
+  </script>
+
+</body>
+</html>

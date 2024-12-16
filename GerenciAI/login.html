@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - App Gerencial</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css"
+    rel="stylesheet"
+  >
+
+  <meta name="description" content="Tela de login para aplicativo gerencial.">
+</head>
+<body class="bg-purple-900 text-white h-screen flex flex-col">
+
+  <header class="p-4 bg-purple-800 shadow-md">
+    <h1 class="text-2xl font-bold text-center">Meu App Gerencial</h1>
+  </header>
+
+  <main class="flex-grow flex items-center justify-center px-4">
+    <section 
+      class="bg-purple-800 backdrop-blur-sm p-6 rounded-md w-full max-w-sm flex flex-col gap-6 shadow-xl"
+    >
+      <h2 class="text-center text-2xl font-semibold">Acesse sua conta</h2>
+
+      <form class="flex flex-col gap-4" onsubmit="return validateForm(event)">
+        <div>
+          <label for="username" class="block mb-1 text-sm font-medium">Usuário ou E-mail</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            class="w-full p-2 rounded text-gray-800 focus:outline-none"
+            placeholder="Digite seu usuário ou e-mail"
+            required
+          />
+        </div>
+
+        <div>
+          <label for="password" class="block mb-1 text-sm font-medium">Senha</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="w-full p-2 rounded text-gray-800 focus:outline-none"
+            placeholder="Digite sua senha"
+            required
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="bg-purple-600 hover:bg-purple-500 focus:ring-2 focus:ring-purple-400 rounded p-2 font-bold transition-colors"
+        >
+          Entrar
+        </button>
+      </form>
+
+      <div class="flex justify-center">
+        <a href="#" class="text-sm underline hover:text-purple-300">Esqueci minha senha</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-purple-800 p-4 text-center text-sm">
+    <p>© 2024 - Meu App Gerencial</p>
+  </footer>
+
+  <script>
+    function validateForm(event) {
+      event.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      if (!username || !password) {
+        alert('Por favor, preencha usuário e senha.');
+        return false;
+      }
+
+
+      alert('Login efetuado com sucesso!');
+      window.location.href = 'dashboard.html'; 
+      return true;
+    }
+  </script>
+
+</body>
+</html>

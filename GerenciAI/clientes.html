@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Clientes - App Gerencial</title>
+  
+  <link 
+    href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" 
+    rel="stylesheet"
+  >
+</head>
+<body class="bg-purple-900 text-white min-h-screen flex flex-col">
+
+  <nav class="bg-purple-800 p-4 shadow-md">
+    <div class="container mx-auto flex items-center justify-between">
+      <a href="dashboard.html" class="text-xl font-bold">Meu App Gerencial</a>
+      <ul class="flex gap-4">
+        <li><a href="dashboard.html" class="hover:text-purple-300 transition">Dashboard</a></li>
+        <li><a href="estoque.html" class="hover:text-purple-300 transition">Estoque</a></li>
+        <li><a href="clientes.html" class="hover:text-purple-300 transition">Clientes</a></li>
+        <li><a href="vendas.html" class="hover:text-purple-300 transition">Vendas</a></li>
+        <li><a href="login.html" class="hover:text purple-300 transition">Sair</a></li>
+
+      </ul>
+    </div>
+  </nav>
+
+  <main class="flex-grow container mx-auto p-4">
+    <h1 class="text-3xl font-semibold mt-4">Clientes</h1>
+
+    <section class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 my-6">
+      <div class="relative">
+        <input
+          type="text"
+          id="searchClientInput"
+          class="w-64 p-2 rounded text-gray-900 focus:outline-none"
+          placeholder="Buscar cliente..."
+        />
+        <button
+          class="absolute right-1 top-1 bg-purple-600 hover:bg-purple-500 text-sm px-3 py-1 rounded text-white"
+          onclick="searchClient()"
+        >
+          Buscar
+        </button>
+      </div>
+
+      <button
+        class="bg-purple-600 hover:bg-purple-500 rounded px-4 py-2 font-bold transition-colors"
+        onclick="openModal()"
+      >
+        Novo Cliente
+      </button>
+    </section>
+
+    <section class="bg-purple-800 rounded p-4">
+      <table class="min-w-full text-left">
+        <thead class="border-b border-purple-700">
+          <tr>
+            <th class="py-2 px-2">Nome</th>
+            <th class="py-2 px-2">Telefone</th>
+            <th class="py-2 px-2">E-mail</th>
+            <th class="py-2 px-2">Status</th>
+            <th class="py-2 px-2">Ações</th>
+          </tr>
+        </thead>
+        <tbody id="clientesTbody">
+          <tr class="border-b border-purple-700">
+            <td class="py-2 px-2">João da Silva</td>
+            <td class="py-2 px-2">(11) 99999-9999</td>
+            <td class="py-2 px-2">joao.silva@example.com</td>
+            <td class="py-2 px-2">Ativo</td>
+            <td class="py-2 px-2">
+              <button class="bg-purple-600 hover:bg-purple-500 rounded px-3 py-1 text-sm" onclick="editClient()">
+                Editar
+              </button>
+              <button class="bg-red-600 hover:bg-red-500 rounded px-3 py-1 text-sm ml-2" onclick="deleteClient()">
+                Excluir
+              </button>
+            </td>
+          </tr>
+          <tr class="border-b border-purple-700">
+            <td class="py-2 px-2">Maria Oliveira</td>
+            <td class="py-2 px-2">(21) 98888-8888</td>
+            <td class="py-2 px-2">maria.oliveira@example.com</td>
+            <td class="py-2 px-2">Inadimplente</td>
+            <td class="py-2 px-2">
+              <button class="bg-purple-600 hover:bg-purple-500 rounded px-3 py-1 text-sm" onclick="editClient()">
+                Editar
+              </button>
+              <button class="bg-red-600 hover:bg-red-500 rounded px-3 py-1 text-sm ml-2" onclick="deleteClient()">
+                Excluir
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer class="bg-purple-800 p-4 text-center text-sm">
+    <p>© 2024 - Meu App Gerencial</p>
+  </footer>
+
+  <div
+    id="modalAddClient"
+    class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  >
+    <div class="bg-purple-800 w-full max-w-md p-6 rounded shadow-lg">
+      <h2 class="text-2xl font-bold mb-4">Adicionar Cliente</h2>
+      <form onsubmit="return addClient(event)" class="flex flex-col gap-4">
+        <div>
+          <label for="nomeCliente" class="block mb-1 text-sm font-medium">Nome</label>
+          <input 
+            type="text"
+            id="nomeCliente"
+            class="w-full p-2 rounded text-gray-900"
+            required
+          />
+        </div>
+        <div>
+          <label for="telefoneCliente" class="block mb-1 text-sm font-medium">Telefone</label>
+          <input 
+            type="text"
+            id="telefoneCliente"
+            class="w-full p-2 rounded text-gray-900"
+          />
+        </div>
+        <div>
+          <label for="emailCliente" class="block mb-1 text-sm font-medium">E-mail</label>
+          <input 
+            type="email"
+            id="emailCliente"
+            class="w-full p-2 rounded text-gray-900"
+          />
+        </div>
+        <div>
+          <label for="statusCliente" class="block mb-1 text-sm font-medium">Status</label>
+          <select id="statusCliente" class="w-full p-2 rounded text-gray-900">
+            <option value="Ativo">Ativo</option>
+            <option value="Inadimplente">Inadimplente</option>
+            <option value="Inativo">Inativo</option>
+          </select>
+        </div>
+
+        <div class="flex justify-end gap-4 mt-4">
+          <button
+            type="button"
+            class="bg-gray-500 hover:bg-gray-400 rounded px-4 py-2"
+            onclick="closeModal()"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            class="bg-purple-600 hover:bg-purple-500 rounded px-4 py-2 font-bold"
+          >
+            Salvar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function openModal() {
+      document.getElementById('modalAddClient').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('modalAddClient').classList.add('hidden');
+    }
+
+    function addClient(event) {
+      event.preventDefault();
+
+      const nome = document.getElementById('nomeCliente').value.trim();
+      const telefone = document.getElementById('telefoneCliente').value.trim();
+      const email = document.getElementById('emailCliente').value.trim();
+      const status = document.getElementById('statusCliente').value;
+
+      // Exemplo: inserir linha na tabela
+      const tbody = document.getElementById('clientesTbody');
+      const tr = document.createElement('tr');
+      tr.classList.add('border-b', 'border-purple-700');
+      tr.innerHTML = `
+        <td class="py-2 px-2">${nome}</td>
+        <td class="py-2 px-2">${telefone}</td>
+        <td class="py-2 px-2">${email}</td>
+        <td class="py-2 px-2">${status}</td>
+        <td class="py-2 px-2">
+          <button class="bg-purple-600 hover:bg-purple-500 rounded px-3 py-1 text-sm" onclick="editClient()">
+            Editar
+          </button>
+          <button class="bg-red-600 hover:bg-red-500 rounded px-3 py-1 text-sm ml-2" onclick="deleteClient()">
+            Excluir
+          </button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+
+      document.getElementById('nomeCliente').value = '';
+      document.getElementById('telefoneCliente').value = '';
+      document.getElementById('emailCliente').value = '';
+      document.getElementById('statusCliente').value = 'Ativo';
+
+      closeModal();
+
+      
+    }
+
+    function editClient() {
+      alert('Função de edição de cliente em desenvolvimento...');
+    }
+    function deleteClient() {
+      alert('Função de exclusão de cliente em desenvolvimento...');
+    }
+
+    function searchClient() {
+      const input = document.getElementById('searchClientInput').value.toLowerCase();
+      const rows = document.querySelectorAll('#clientesTbody tr');
+
+      rows.forEach(row => {
+        const nomeTd = row.querySelector('td:first-child');
+        const nome = nomeTd ? nomeTd.textContent.toLowerCase() : '';
+        if (nome.includes(input)) {
+          row.classList.remove('hidden');
+        } else {
+          row.classList.add('hidden');
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
